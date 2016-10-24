@@ -9,17 +9,24 @@ import 'rxjs/add/operator/map';
 })
 export class ProfileComponent { 
     user:any; 
-    repos:any; 
+    repos:any;
+    username:string;
     constructor(private _githubService:GithubService){
         this._githubService.getUser().subscribe(user => {
            this.user = user;
-        })
-
+        });
         this._githubService.getRepos().subscribe(repos => {
             this.repos = repos;
-        })
+        });
     }
     searchUser(){
-        console.log("It Works!");
+        this._githubService.updateUser(this.username);
+        this._githubService.getUser().subscribe(user => {
+           this.user = user;
+        });
+        this._githubService.getRepos().subscribe(repos => {
+            this.repos = repos;
+        });
+        console.log("Works!");
     }
 }
